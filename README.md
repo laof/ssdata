@@ -9,5 +9,4 @@ if err != nil {
 }
 
 mapdata := PingAll(data)
-
 ```
