@@ -1,4 +1,4 @@
-module github.com/laof/shelper
+module github.com/laof/ssdata
 
 go 1.19
 
