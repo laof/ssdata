@@ -25,7 +25,7 @@ func includes(arr []string, value string) bool {
 
 }
 
-var codemap = [][]string{
+var CodeMap = [][]string{
 	{"A", "龘"},
 	// {"B", "鬻"},
 	{"C", "鱻"},

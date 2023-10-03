@@ -59,7 +59,7 @@ func EncodeList(arr []List) []List {
 	for i, node := range arr {
 		if len(node.Nodes) > 0 {
 			text := strings.Join(node.Nodes, ",")
-			for _, arr := range codemap {
+			for _, arr := range CodeMap {
 				text = strings.ReplaceAll(text, arr[0], arr[1])
 			}
 			arr[i].Data = text
