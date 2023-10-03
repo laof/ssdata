@@ -1,5 +1,7 @@
 package ssdata
 
+import "time"
+
 func reverseString(str string) string {
 	// 将字符串转换为字节切片
 	byteSlice := []byte(str)
@@ -25,7 +27,11 @@ func includes(arr []string, value string) bool {
 
 }
 
-var CodeMap = [][]string{
+func now() string {
+	return time.Now().Format("2006-01-02 15:04:05")
+}
+
+var codemap = [][]string{
 	{"A", "龘"},
 	// {"B", "鬻"},
 	{"C", "鱻"},

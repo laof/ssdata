@@ -54,12 +54,12 @@ func Get(url string) (Data, error) {
 	return data, nil
 }
 
-func EncodeList(arr []List) []List {
+func encoding(arr []List) []List {
 
 	for i, node := range arr {
 		if len(node.Nodes) > 0 {
 			text := strings.Join(node.Nodes, ",")
-			for _, arr := range CodeMap {
+			for _, arr := range codemap {
 				text = strings.ReplaceAll(text, arr[0], arr[1])
 			}
 			arr[i].Data = text
@@ -71,4 +71,21 @@ func EncodeList(arr []List) []List {
 
 	}
 	return arr
+}
+
+func GetDataString(list []List) (string, error) {
+
+	data := Data{
+		List:   encoding(list),
+		Decode: codemap,
+		Update: now(),
+	}
+
+	str, err := json.Marshal(data)
+
+	if err != nil {
+		return "", err
+	}
+
+	return string(str), nil
 }
