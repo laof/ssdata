@@ -1,4 +1,4 @@
-package main
+package ssdata
 
 func reverseString(str string) string {
 	// 将字符串转换为字节切片
