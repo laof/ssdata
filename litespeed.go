@@ -10,7 +10,7 @@ import (
 	"github.com/xxf098/lite-proxy/web"
 )
 
-func profile(url string) []string {
+func profile(url string, filterBySuccess bool) []string {
 
 	link := flag.String("link", url, "link to test")
 	mode := flag.String("mode", "pingonly", "speed test mode")
@@ -38,21 +38,23 @@ func profile(url string) []string {
 	res, _ := web.TestContext(ctx, opts, &web.EmptyMessageWriter{})
 	nodes := []string{}
 	for _, node := range res {
-		if node.IsOk {
+
+		if (filterBySuccess && node.IsOk) || (!filterBySuccess && !node.IsOk) {
 			nodes = append(nodes, node.Link)
 		}
+
 	}
 	return nodes
 }
 
 // {name:[]}
-func PingAll(data Data) (res map[string][]string) {
+func PingAll(data Data, filterBySuccess bool) (res map[string][]string) {
 	nodes := []string{}
 	res = map[string][]string{}
 	for _, item := range data.List {
 		nodes = append(nodes, item.Nodes...)
 	}
-	list := profile(strings.Join(nodes, "\n"))
+	list := profile(strings.Join(nodes, "\n"), filterBySuccess)
 
 	for _, item := range data.List {
 
