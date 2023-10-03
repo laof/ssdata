@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/xxf098/lite-proxy/web"
+	"github.com/laof/lite-speed-test/web"
 )
 
 func profile(url string, filterBySuccess bool) []string {
