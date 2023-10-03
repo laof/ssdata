@@ -2,7 +2,7 @@
 
 
 ```
-data, err := Get("https://laof.github.io/get-nodes-test-app/json/data.json")
+data, err := Get("https://laof/fdate/ok")
 
 if err != nil {
     return
