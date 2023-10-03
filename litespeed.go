@@ -48,11 +48,17 @@ func profile(url string, filterBySuccess bool) []string {
 }
 
 // {name:[]}
-func PingAll(data Data, filterBySuccess bool) (res map[string][]string) {
+func PingAll(data Data, filterBySuccess bool, max int) (res map[string][]string) {
+
 	nodes := []string{}
 	res = map[string][]string{}
 	for _, item := range data.List {
-		nodes = append(nodes, item.Nodes...)
+
+		temp := item.Nodes
+		if max > 0 && len(item.Nodes) > max {
+			temp = item.Nodes[0:max]
+		}
+		nodes = append(nodes, temp...)
 	}
 	list := profile(strings.Join(nodes, "\n"), filterBySuccess)
 

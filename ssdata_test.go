@@ -12,7 +12,7 @@ func TestGet(t *testing.T) {
 	if err != nil {
 		return
 	}
-	mapdata := PingAll(data, true)
+	mapdata := PingAll(data, true, 3)
 
 	if len(mapdata) > 0 {
 		log.Println("ok ==" + strconv.Itoa(len(mapdata)))
