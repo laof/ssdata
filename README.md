@@ -8,5 +8,5 @@ if err != nil {
     return
 }
 
-mapdata := PingAll(data)
+mapdata := PingAll(data, true)
 ```
