@@ -47,6 +47,7 @@ func Get(url string) (Data, error) {
 
 		data.List[i].Name = ReverseString(item.Name)
 		data.List[i].Datetime = ReverseString(item.Datetime)
+		data.List[i].Remarks = ReverseString(item.Remarks)
 
 		if item.Data == "" {
 			continue
@@ -75,6 +76,7 @@ func encoding(arr []List) []List {
 		}
 		arr[i].Name = ReverseString(node.Name)
 		arr[i].Datetime = ReverseString(node.Datetime)
+		arr[i].Remarks = ReverseString(node.Remarks)
 
 	}
 	return arr
