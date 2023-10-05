@@ -9,6 +9,7 @@ import (
 
 type List struct {
 	Name     string   `json:"name"`
+	Remarks  string   `json:"remarks"`
 	Nodes    []string `json:"-"`
 	Datetime string   `json:"datetime"`
 	Length   int      `json:"length"`
