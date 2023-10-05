@@ -19,6 +19,7 @@ type List struct {
 type Data struct {
 	List   []List     `json:"list"`
 	Decode [][]string `json:"decode"`
+	Notice string     `json:"notice"`
 	Update string     `json:"update"`
 }
 
@@ -41,10 +42,11 @@ func Get(url string) (Data, error) {
 		return data, err
 	}
 
+	data.Notice = ReverseString(data.Notice)
 	for i, item := range data.List {
 
-		data.List[i].Name = reverseString(item.Name)
-		data.List[i].Datetime = reverseString(item.Datetime)
+		data.List[i].Name = ReverseString(item.Name)
+		data.List[i].Datetime = ReverseString(item.Datetime)
 
 		if item.Data == "" {
 			continue
@@ -71,8 +73,8 @@ func encoding(arr []List) []List {
 			arr[i].Length = len(node.Nodes)
 			arr[i].Nodes = []string{}
 		}
-		arr[i].Name = reverseString(node.Name)
-		arr[i].Datetime = reverseString(node.Datetime)
+		arr[i].Name = ReverseString(node.Name)
+		arr[i].Datetime = ReverseString(node.Datetime)
 
 	}
 	return arr

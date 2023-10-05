@@ -55,18 +55,18 @@ func profile(url string, rs Results, sm map[string][]string) Results {
 
 		for key, value := range sm {
 
-			if !includes(value, node.Link) {
+			if !Includes(value, node.Link) {
 				continue
 			}
 
 			if node.IsOk {
 
-				if !includes(rs.Success, key) {
+				if !Includes(rs.Success, key) {
 					rs.Success = append(rs.Success, key)
 				}
 
 			} else {
-				if !includes(rs.Failed, key) {
+				if !Includes(rs.Failed, key) {
 					rs.Failed = append(rs.Failed, key)
 				}
 			}

@@ -2,7 +2,7 @@ package ssdata
 
 import "time"
 
-func reverseString(str string) string {
+func ReverseString(str string) string {
 	// 将字符串转换为字节切片
 	byteSlice := []byte(str)
 	length := len(byteSlice)
@@ -16,7 +16,7 @@ func reverseString(str string) string {
 	return string(byteSlice)
 }
 
-func includes(arr []string, value string) bool {
+func Includes(arr []string, value string) bool {
 
 	for _, item := range arr {
 		if item == value {
