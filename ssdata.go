@@ -19,7 +19,6 @@ type List struct {
 type Data struct {
 	List   []List     `json:"list"`
 	Decode [][]string `json:"decode"`
-	Notice string     `json:"notice"`
 	Update string     `json:"update"`
 }
 
@@ -42,7 +41,6 @@ func Get(url string) (Data, error) {
 		return data, err
 	}
 
-	data.Notice = ReverseString(data.Notice)
 	for i, item := range data.List {
 
 		data.List[i].Name = ReverseString(item.Name)
