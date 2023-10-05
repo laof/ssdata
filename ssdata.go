@@ -41,18 +41,17 @@ func Get(url string) (Data, error) {
 	}
 
 	for i, item := range data.List {
-		txt := item.Data
+
+		data.List[i].Name = reverseString(item.Name)
+		data.List[i].Datetime = reverseString(item.Datetime)
 
 		if item.Data == "" {
 			continue
 		}
-
+		txt := item.Data
 		for _, arr := range data.Decode {
 			txt = strings.ReplaceAll(txt, arr[1], arr[0])
 		}
-
-		data.List[i].Name = reverseString(item.Name)
-		data.List[i].Datetime = reverseString(item.Datetime)
 		data.List[i].Data = txt
 		data.List[i].Nodes = strings.Split(txt, ",")
 	}
