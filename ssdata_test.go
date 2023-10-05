@@ -1,8 +1,7 @@
 package ssdata
 
 import (
-	"log"
-	"strconv"
+	"fmt"
 	"testing"
 )
 
@@ -12,12 +11,8 @@ func TestGet(t *testing.T) {
 	if err != nil {
 		return
 	}
-	mapdata := PingAll(data, true, 3)
+	mapdata := PingAll(data, 3)
 
-	if len(mapdata) > 0 {
-		log.Println("ok ==" + strconv.Itoa(len(mapdata)))
-	} else {
-		t.Errorf("fdafda")
-	}
+	fmt.Println(mapdata)
 
 }

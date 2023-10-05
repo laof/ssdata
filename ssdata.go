@@ -42,6 +42,11 @@ func Get(url string) (Data, error) {
 
 	for i, item := range data.List {
 		txt := item.Data
+
+		if item.Data == "" {
+			continue
+		}
+
 		for _, arr := range data.Decode {
 			txt = strings.ReplaceAll(txt, arr[1], arr[0])
 		}

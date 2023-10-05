@@ -10,7 +10,15 @@ import (
 	"github.com/laof/lite-speed-test/web"
 )
 
-func profile(url string, filterBySuccess bool) []string {
+type Results struct {
+	Services     []string
+	Failed       []string
+	Success      []string
+	FailedNodes  []string
+	SuccessNodes []string
+}
+
+func profile(url string, rs Results, sm map[string][]string) Results {
 
 	link := flag.String("link", url, "link to test")
 	mode := flag.String("mode", "pingonly", "speed test mode")
@@ -36,41 +44,64 @@ func profile(url string, filterBySuccess bool) []string {
 	ctx := context.Background()
 
 	res, _ := web.TestContext(ctx, opts, &web.EmptyMessageWriter{})
-	nodes := []string{}
+
 	for _, node := range res {
 
-		if (filterBySuccess && node.IsOk) || (!filterBySuccess && !node.IsOk) {
-			nodes = append(nodes, node.Link)
+		if node.IsOk {
+			rs.SuccessNodes = append(rs.SuccessNodes, node.Link)
+		} else {
+			rs.FailedNodes = append(rs.FailedNodes, node.Link)
+		}
+
+		for key, value := range sm {
+
+			if !includes(value, node.Link) {
+				continue
+			}
+
+			if node.IsOk {
+
+				if !includes(rs.Success, key) {
+					rs.Success = append(rs.Success, key)
+				}
+
+			} else {
+				if !includes(rs.Failed, key) {
+					rs.Failed = append(rs.Failed, key)
+				}
+			}
+
 		}
 
 	}
-	return nodes
+	return rs
 }
 
 // {name:[]}
-func PingAll(data Data, filterBySuccess bool, max int) (res map[string][]string) {
+func PingAll(data Data, max int) Results {
 
+	res := Results{}
 	nodes := []string{}
-	res = map[string][]string{}
+
+	c := map[string][]string{}
+
 	for _, item := range data.List {
 
 		temp := item.Nodes
 		if max > 0 && len(item.Nodes) > max {
 			temp = item.Nodes[0:max]
 		}
-		nodes = append(nodes, temp...)
-	}
-	list := profile(strings.Join(nodes, "\n"), filterBySuccess)
 
-	for _, item := range data.List {
+		c[item.Name] = temp
 
-		for _, link := range list {
-
-			if includes(item.Nodes, link) {
-				res[item.Name] = append(res[item.Name], link)
-			}
+		res.Services = append(res.Services, item.Name)
+		if len(temp) == 0 {
+			res.Failed = append(res.Failed, item.Name)
 		}
 
+		nodes = append(nodes, temp...)
 	}
-	return
+
+	p := profile(strings.Join(nodes, "\n"), res, c)
+	return p
 }
