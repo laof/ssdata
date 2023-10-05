@@ -16,3 +16,8 @@ func TestGet(t *testing.T) {
 	fmt.Println(mapdata)
 
 }
+
+func TestReverseString(t *testing.T) {
+	aaa := ReverseString("你")
+	fmt.Println(aaa)
+}

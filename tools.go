@@ -1,8 +1,24 @@
 package ssdata
 
-import "time"
+import (
+	"strings"
+	"time"
+)
 
 func ReverseString(str string) string {
+
+	d := strings.Split(str, "")
+
+	a := []string{}
+
+	for i := range d {
+		a = append(a, d[len(d)-1-i])
+	}
+	return strings.Join(a, "")
+}
+
+// 中文有问题。。。
+func ReverseString11(str string) string {
 	// 将字符串转换为字节切片
 	byteSlice := []byte(str)
 	length := len(byteSlice)
