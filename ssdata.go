@@ -96,3 +96,17 @@ func GetDataString(list []List) (string, error) {
 
 	return string(str), nil
 }
+
+func FilterSlice[T any](arr []T, filter func(i int, val T) bool) []T {
+
+	list := []T{}
+
+	for i, v := range arr {
+		if filter(i, v) {
+			list = append(list, v)
+		}
+	}
+
+	return list
+
+}

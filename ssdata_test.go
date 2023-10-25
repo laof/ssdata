@@ -1,23 +1,28 @@
 package ssdata
 
 import (
-	"fmt"
+	"log"
+	"os"
+	"strings"
 	"testing"
 )
 
 func TestGet(t *testing.T) {
-	data, err := Get("https://laof.github.io/get-nodes-test-app/json/data.json")
+	data, err := os.ReadFile("test.txt")
 
 	if err != nil {
+		log.Println(err.Error())
 		return
 	}
-	mapdata := PingAll(data, 3)
 
-	fmt.Println(mapdata)
+	txt := string(data)
 
-}
+	list := strings.Split(txt, "\n")
 
-func TestReverseString(t *testing.T) {
-	aaa := ReverseString("你")
-	fmt.Println(aaa)
+	ss := FilterSlice[string](list, func(i int, val string) bool {
+		return strings.HasPrefix(val, "ss://")
+	})
+
+	Test(strings.Join(ss, "\n"))
+
 }

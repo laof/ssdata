@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/laof/lite-speed-test/web"
+	"github.com/laof/lite-speed-test/web/render"
 )
 
 type Results struct {
@@ -18,9 +19,8 @@ type Results struct {
 	SuccessNodes []string
 }
 
-func profile(url string, rs Results, sm map[string][]string) Results {
-
-	link := flag.String("link", url, "link to test")
+func Test(txt string) (render.Nodes, error) {
+	link := flag.String("link", txt, "link to test")
 	mode := flag.String("mode", "pingonly", "speed test mode")
 	flag.Parse()
 	// link := "vmess://aHR0cHM6Ly9naXRodWIuY29tL3h4ZjA5OC9MaXRlU3BlZWRUZXN0"
@@ -42,8 +42,12 @@ func profile(url string, rs Results, sm map[string][]string) Results {
 		OutputMode:    0, // 0: base64 1:file path 2: no pic 3: json 4: txt
 	}
 	ctx := context.Background()
+	return web.TestContext(ctx, opts, &web.EmptyMessageWriter{})
+}
 
-	res, _ := web.TestContext(ctx, opts, &web.EmptyMessageWriter{})
+func profile(txt string, rs Results, sm map[string][]string) Results {
+
+	res, _ := Test(txt)
 
 	for _, node := range res {
 
