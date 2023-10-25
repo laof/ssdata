@@ -44,7 +44,10 @@ func Includes(arr []string, value string) bool {
 }
 
 func now() string {
-	return time.Now().Format("2006-01-02 15:04:05")
+	tn := time.Now()
+	location, _ := time.LoadLocation("Asia/Shanghai")
+	t := tn.In(location).Format("2006-01-02 15:04:05")
+	return t
 }
 
 var codemap = [][]string{
