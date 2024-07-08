@@ -2,6 +2,7 @@ package ssdata
 
 import (
 	"encoding/json"
+	"errors"
 	"io"
 	"net/http"
 	"strings"
@@ -20,6 +21,38 @@ type Data struct {
 	List   []List     `json:"list"`
 	Decode [][]string `json:"decode"`
 	Update string     `json:"update"`
+}
+
+func TransData(txt string) (Data, error) {
+	data := Data{}
+
+	if txt == "" {
+		return data, errors.New("ssdata: no txt data... ")
+	}
+
+	err := json.Unmarshal([]byte(txt), &data)
+
+	if err != nil {
+		return data, err
+	}
+
+	for i, item := range data.List {
+
+		data.List[i].Name = ReverseString(item.Name)
+		data.List[i].Datetime = ReverseString(item.Datetime)
+		data.List[i].Remarks = ReverseString(item.Remarks)
+
+		if item.Data == "" {
+			continue
+		}
+		txt := item.Data
+		for _, arr := range data.Decode {
+			txt = strings.ReplaceAll(txt, arr[1], arr[0])
+		}
+		data.List[i].Data = txt
+		data.List[i].Nodes = strings.Split(txt, ",")
+	}
+	return data, nil
 }
 
 func Get(url string) (Data, error) {
