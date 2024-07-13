@@ -58,6 +58,10 @@ func trans(txt []byte) (Data, error) {
 		return data, err
 	}
 
+	return Took(data), nil
+}
+
+func Took(data Data) Data {
 	for i, item := range data.List {
 
 		data.List[i].Name = ReverseString(item.Name)
@@ -74,7 +78,8 @@ func trans(txt []byte) (Data, error) {
 		data.List[i].Data = txt
 		data.List[i].Nodes = strings.Split(txt, ",")
 	}
-	return data, nil
+	return data
+
 }
 
 func encoding(arr []List) []List {
